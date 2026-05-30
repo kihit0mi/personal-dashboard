@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 1. The Auth Table
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  role      String   @default("ADMIN")
+
+  createdAt DateTime @default(now())
+}
+
+// 2. The Domain Table (For people involved in tasks)
+// Define the exact tags allowed
+enum PersonGroup {
+  WORK
+  FAMILY
+  EX_WIFE
+  FRIEND
+  CHILD
+}
+
+model Person {
+  id        Int         @id @default(autoincrement())
+  name      String
+  colorCode String      @default("#CCCCCC") 
+  group     PersonGroup @default(FRIEND)
+
+  tasks     Task[]   
+}
+
+// 3. The Tasks
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum Recurrence {
+  NONE
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
+model Task {
+  id            Int         @id @default(autoincrement())
+  name          String
+  status        String      @default("PENDING")
+  description   String?
+  
+  startDate     DateTime
+  endDate       DateTime?
+  
+  recurrence    Recurrence  @default(NONE)
+  recurringDays DayOfWeek[]
+  
+  people        Person[] 
+  
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
