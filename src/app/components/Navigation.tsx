@@ -1,4 +1,3 @@
-"use html";
 'use client';
 
 import React from 'react';
@@ -19,7 +18,7 @@ export default function Navigation({ activeTab, setActiveTab }: NavigationProps)
   return (
     <>
       {/* DESKTOP SIDEBAR: Visible on medium screens (md) and up */}
-      <aside className="hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 bg-slate-900 text-white p-4 border-r border-slate-800">
+      <aside className="hidden md:flex flex-col w-64 h-screen fixed left-0 top-0 bg-zinc-950 text-white p-4 border-r border-slate-800">
         <div className="mb-8 px-2">
           <h1 className="text-xl font-bold tracking-tight">Dashboard</h1>
         </div>
@@ -33,7 +32,7 @@ export default function Navigation({ activeTab, setActiveTab }: NavigationProps)
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                   isActive 
-                    ? 'bg-blue-600 text-white' 
+                    ? 'bg-emerald-600 text-white' 
                     : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
                 }`}
               >
@@ -46,7 +45,7 @@ export default function Navigation({ activeTab, setActiveTab }: NavigationProps)
       </aside>
 
       {/* MOBILE BOTTOM NAVBAR: Visible by default, hidden on md screens and up */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-slate-900 border-t border-slate-800 flex items-center justify-around px-4 z-50">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-zinc-950 border-t border-slate-800 flex items-center justify-around px-4 z-50">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -55,7 +54,7 @@ export default function Navigation({ activeTab, setActiveTab }: NavigationProps)
               key={item.id}
               onClick={() => setActiveTab(item.id)}
               className={`flex flex-col items-center justify-center w-20 h-full transition-colors ${
-                isActive ? 'text-blue-500' : 'text-slate-400'
+                isActive ? 'text-emerald-500' : 'text-slate-400'
               }`}
             >
               <Icon className="w-5 h-5" />
