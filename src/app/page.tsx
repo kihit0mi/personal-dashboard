@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Navigation from './components/Navigation';
+import CalendarGrid from './components/CalendarGrid';
 
 // main shell, tabs swap content in the center column
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
           {activeTab === 'calendar' && (
             <div className="animate-in fade-in duration-300">
               <div className="mb-6 flex justify-between items-end">
-            <div>
+                <div>
                   <h2 className="text-2xl font-bold text-stone-800">Schedule</h2>
                   <p className="text-stone-600 text-sm mt-1">Manage custody blocks and events.</p>
                 </div>
