@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -14,7 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 1. The Auth Table
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -24,8 +17,6 @@ model User {
   createdAt DateTime @default(now())
 }
 
-// 2. The Domain Table (For people involved in tasks)
-// Define the exact tags allowed
 enum PersonGroup {
   WORK
   FAMILY
@@ -43,7 +34,6 @@ model Person {
   tasks     Task[]   
 }
 
-// 3. The Tasks
 enum DayOfWeek {
   MONDAY
   TUESDAY
@@ -77,4 +67,25 @@ model Task {
   
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+}
+
+model CustodyDay {
+  date      String   @id // yyyy-mm-dd
+  status    String   // with-children or without-children
+  updatedAt DateTime @updatedAt
+
+  @@map("custody_days")
+}
+
+model CalendarEvent {
+  id              String   @id @default(cuid())
+  date            String
+  title           String
+  type            String
+  requiresPacking Boolean  @default(false)
+  packingNotes    String?
+  pickupNotes     String?
+  createdAt       DateTime @default(now())
+
+  @@index([date])
 }
